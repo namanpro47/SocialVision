@@ -1,0 +1,28 @@
+{
+  "name": "socialvision",
+  "version": "1.0.0",
+  "description": "Computer Vision to detect people in real-time",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namanpro47/SocialVision.git"
+  },
+  "author": "Naman Singh",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "open-graph-scraper": "^4.8.2",
+    "path": "^0.12.7",
+    "pg": "^8.5.1"
+  },
+  "bugs": {
+    "url": "https://github.com/namanpro47/SocialVision/issues"
+  },
+  "homepage": "https://github.com/namanpro47/SocialVision#readme"
+}
