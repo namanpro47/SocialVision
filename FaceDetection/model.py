@@ -1,5 +1,6 @@
 import numpy as np
 import random
+import json
 from PIL import Image
 from collections import defaultdict
 
@@ -10,22 +11,24 @@ import torch
 import torch.nn.functional as F
 from utils import SiameseNetwork
 
-from time import time
 
-start = time()
+def __helper__():
+    # load pretrained model
+    net = torch.load("models/network.pth")
 
-# load pretrained model
-net = torch.load("models/network.pth")
-
-# Resize the images and transform to tensors
-transformation = transforms.Compose([transforms.Resize((100, 100)),
-                                     transforms.ToTensor()
-                                     ])
+    # Resize the images and transform to tensors
+    transformation = transforms.Compose([transforms.Resize((100, 100)),
+                                        transforms.ToTensor()
+                                         ])
+    return net, transformation
 
 
-def test_input(test_image):
+def run_inference(test_image: str):
     """ Identify the person given an image """
 
+    net, transformation = __helper__()
+
+    test_image = Image.open(test_image)
     # assuming structure -> data/DB/name/pic.jpg
     def get_name(x): return x.split("/")[-2]
 
@@ -50,9 +53,6 @@ def test_input(test_image):
             min_score = np.mean(v)
             min_name = k
 
-    return min_name, min_score  # label and corresponding score
-
-
-test_image = Image.open("data/testing/aydin.jpg")
-end = time()
-print(test_input(test_image), end - start)
+    # label and corresponding score
+    with open(f"{test_folder}/{min_name}/{min_name}.json") as f:
+        return json.load(f), min_score
